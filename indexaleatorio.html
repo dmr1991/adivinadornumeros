@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CAPTURAR INFORMACIÓN DE INPUT Y BOTONES</title>
+  </head>
+  <body>
+    <h1>ADIVINA EL NÚMERO</h1>
+    <h3>
+      Ingresa un número del 1 al 10 para intentar adivinar alguno de una lista
+      de 4 números pensados.
+    </h3>
+    <input type="text" placeholder="Número" id="input" />
+    <button>Verificar si acerté</button>
+  </body>
+
+  <script>
+    function saltarlinea() {
+      document.write("<br>");
+      document.write("<br>");
+      document.write("<br>");
+    }
+
+    function imprimir(frase) {
+      document.write(frase);
+      saltarlinea();
+    }
+
+    //     let numerosSecretos = Math.round(Math.random() * 10);
+
+    //genera 1 numero aleatorio
+    function numeroRandom() {
+      return Math.round(Math.random() * 10);
+    }
+
+    //llena un array con x cantidad de numeros usando la funcion numeroRandom()
+    function generarListaNumeros(cantidad) {
+      let contador = 1;
+      let listaNumeros = [];
+
+      while (contador <= cantidad) {
+        let switchDuplicados = false;
+        let numeroAleatorio = numeroRandom();
+        if (numeroAleatorio != 0) {
+          for (
+            let posicionDuplicados = 0;
+            posicionDuplicados < listaNumeros.length;
+            posicionDuplicados++
+          ) {
+            if (numeroAleatorio == listaNumeros[posicionDuplicados]) {
+              switchDuplicados = true;
+            }
+          }
+          if (switchDuplicados == false) {
+            listaNumeros.push(numeroAleatorio);
+            contador++;
+          }
+        }
+      }
+      return listaNumeros;
+    }
+
+    //let numerosSecretos = [3, 5, 7, 9]; esta es cuando yo manualmente ingreso los numeros de la lista
+
+    //esta parte llena mi array numerosSecretos con el array de 4 numeros al azar
+    let numerosSecretos = generarListaNumeros(4);
+
+    let i = 0;
+    let acerto = false;
+
+    let inputNumero = document.querySelector("input");
+
+    inputNumero.focus(); //le dice que el cursos se coloque en esa cajita
+
+    function verificar() {
+      for (var i = 0; i < numerosSecretos.length; i++) {
+        if (parseInt(inputNumero.value) == numerosSecretos[i]) {
+          alert(
+            "Acertaste! El número " +
+              inputNumero.value +
+              " se encontraba en el lugar #" +
+              (i + 1) +
+              " en la lista"
+          );
+          acerto = true;
+        }
+      }
+
+      if (acerto == false) {
+        alert("No adivinaste ninguno de los cuatro números pensados.");
+      }
+
+      inputNumero.value = ""; // resetea el valor de la cajita a vacio
+      inputNumero.focus();
+    }
+
+    let button = document.querySelector("button");
+    button.onclick = verificar;
+  </script>
+</html>
